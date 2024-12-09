@@ -1,0 +1,142 @@
+/* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+  h2 {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  /* Контейнер для чата */
+  .chat-container {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 800px;
+    height: 400px; /* Размер после начала чата */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: height 0.3s ease; /* Плавное изменение высоты */
+  }
+  
+  /* Блок для сообщений */
+  .chat-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: flex-end; /* Поле ввода всегда внизу */
+  }
+  
+  /* Стили для сообщений */
+  .messages {
+    width: 100%;
+    max-height: 400px;  /* Ограничение по высоте сообщений */
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column; /* Сообщения идут сверху вниз */
+    gap: 10px;
+    flex-grow: 1; /* Блок сообщений растягивается */
+  }
+  
+  .message {
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: #e0f7fa;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    font-size: 14px;
+  }
+  
+  .message.user {
+    align-self: flex-end;
+    background-color: #b2dfdb;
+  }
+  
+  .message.bot {
+    align-self: flex-start;
+    background-color: #00796b;
+    color: #fff;
+  }
+  
+  /* Поле ввода и кнопка */
+  .input-container {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    justify-content: space-between;
+    flex-shrink: 0; /* Запрещаем сжать поле ввода */
+  }
+  
+  input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    background-color: #f9f9f9;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #00796b;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #004d40;
+  }
+  
+  button:disabled {
+    background-color: #b2dfdb;
+    cursor: not-allowed;
+  }
+  
+  /* Стили для загрузки файлов */
+  input[type="file"] {
+    margin-top: 15px;
+  }
+  
+  .uploaded-files {
+    margin-top: 15px;
+    width: 100%;
+  }
+  
+  .uploaded-files ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .uploaded-files li {
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .uploaded-files h3 {
+    margin-bottom: 10px;
+  }
+  
+  /* Стиль для анимации загрузки */
+  .loading {
+    font-size: 16px;
+    color: #00796b;
+    margin-top: 10px;
+  }
+  

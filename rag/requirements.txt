@@ -1,0 +1,16 @@
+langchain-community
+langchain-ollama
+langchain-experimental
+neo4j
+tiktoken
+yfiles_jupyter_graphs
+json-repair
+langchain-openai
+langchain_core
+python-dotenv
+langchain-neo4j
+psycopg2
+flask
+flask-cors
+werkzeug
+pypdf2
