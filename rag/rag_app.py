@@ -2,58 +2,47 @@ from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import requests
+import json
 # import json
 
 app = Flask(__name__)
 
 # Настройка CORS
 CORS(app, origins=["http://localhost:3000"])  # Разрешить фронтенд на 3000 порту
-OLLAMA_API_URL = "http://localhost:11434"  # URL Ollama (если локально)
+
+  # URL Ollama (если локально)
 
 # Эндпоинт для обработки сообщений
 @app.route('/chat', methods=['POST'])
 def chat():
+    OLLAMA_API_URL = "http://172.17.0.1:1145/api/generate"
     data = request.get_json()
     if not data or 'message' not in data:
         return jsonify({"error": "Некорректный запрос, отсутствует поле 'message'"}), 400
 
     user_message = data['message']
 
-    # Отправка запроса к API Ollama
+    # # Отправка запроса к API Ollama
 
     req_data = {
-        "model": "llama2",
-        "prompt": "Hello, how are you?"
+        "model": "tinyllama",
+        "prompt": user_message,
+        "stream": False
     }
 
     headers = {"Content-Type": "application/json"} 
 
-    response = requests.post(
-        f"{OLLAMA_API_URL}/api/generate",
-        json=req_data,
-        headers=headers
-    )
-    response.raise_for_status()  # Выбрасывает исключение при HTTP-ошибках
-    api_response = response.json()
-    print("API Response:", api_response)  # Выводим ответ для диагностики
-    bot_reply = api_response.get("completion", "Модель не дала ответа.")
-    # try:
-    #     response = requests.post(
-    #         f"{OLLAMA_API_URL}/api/generate",
-    #         json=req_data,
-    #         headers=headers
-    #     )
-    #     response.raise_for_status()  # Выбрасывает исключение при HTTP-ошибках
-    #     api_response = response.json()
-    #     print("API Response:", api_response)  # Выводим ответ для диагностики
-    #     bot_reply = api_response.get("completion", "Модель не дала ответа.")
-    # except requests.RequestException as e:
-    #     # return jsonify({"reply": "bot_reply"})
-    #     return jsonify({"error": f"Ошибка подключения к Ollama: {str(e)}"}), 500
+    response = requests.post(OLLAMA_API_URL, headers=headers, data=json.dumps(req_data))
 
-    if len(bot_reply) < 1:
-        bot_reply = "huy"
-    return jsonify({"reply": user_message})
+    if response.status_code == 200:
+        response_text = response.text
+        data = json.loads(response_text)
+        act_response = data['response']
+
+        return jsonify({"reply": act_response})
+    else:
+        return jsonify({"code of error ": response.status_code,"text of response :": response.text})
+
 
 # Эндпоинт для загрузки файлов (заглушка)
 @app.route('/upload-files', methods=['POST'])
@@ -76,6 +65,17 @@ def upload_files():
 # Запуск приложения
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
+    OLLAMA_API_URL = "http://172.17.0.1:1145/api/generate"
+    req_data = {
+        "model": "tinyllama",
+        "prompt": "Hello, how are you?",
+        "stream": False
+    }
+
+    headers = {"Content-Type": "application/json"} 
+    response = requests.post(OLLAMA_API_URL, headers=headers, data=json.dumps(req_data))
+
+
 
 
 # import requests
