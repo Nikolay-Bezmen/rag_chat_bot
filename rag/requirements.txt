@@ -14,3 +14,8 @@ flask
 flask-cors
 werkzeug
 pypdf2
+nltk==3.9.1
+sentence-transformers==3.2.1
+scikit-learn==1.5.2
+numpy==1.26.4
+
